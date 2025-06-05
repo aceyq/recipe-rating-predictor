@@ -1,3 +1,8 @@
+---
+layout: page
+title: Predicting Recipe Ratings
+---
+
 ## Introduction and Question Identification
 
 **Introduction**  
