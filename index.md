@@ -2,57 +2,31 @@
 layout: page
 title: Predicting Recipe Ratings
 ---
-# Introduction and Question Identification
+
+## Introduction and Question Identification
 
 **Introduction**  
-Food is deeply personal — and yet, when we search for recipes online, we often rely on star ratings and vague comments to decide what to cook. This project explores how **recipe metadata** — like ingredients, cook time, and number of steps — can help us **predict recipe ratings**, potentially improving search results and recommendations on cooking platforms.
+This project uses two datasets: `RAW_recipes.csv` and `interactions.csv`, both related to online recipes. `RAW_recipes.csv` contains detailed information on over 230,000 recipes, including attributes like name, ingredients, cook time, and nutritional values. `interactions.csv` logs user interactions such as ratings and reviews for these recipes.
 
-To investigate this, we use two large datasets:
+**Question**  
+The central question for this project is:  
+**“Can we predict the average rating of a recipe based on its ingredients and preparation metadata?”**
 
-- `RAW_recipes.csv`: Contains **231,637 recipes**, including details like:
-  - `name`: Title of the recipe
-  - `ingredients`: A list of ingredients used
-  - `minutes`: Time it takes to prepare the recipe
-  - `n_steps`: Number of steps in the preparation process
-  - `submitted`: The date the recipe was added to the site
-  - `nutrition`: A list of seven nutritional values (calories, fat, sugar, etc.)
+**Why It Matters**  
+With the rise of food-related apps and cooking platforms, helping users find high-quality recipes faster can have real-world impact — from saving time and reducing food waste, to improving dietary choices.
 
-- `interactions.csv`: Contains **731,927 user interactions** (ratings and reviews), with:
-  - `recipe_id`: Foreign key linking to a recipe
-  - `rating`: A score from 1 to 5
-  - `review`: A free-text user review (can be blank)
-  - `date`: The date the interaction occurred
-
-**Core Question**  
-> **Can we predict the average rating of a recipe based on its ingredients and preparation metadata?**
-
-In other words — can we estimate how good a recipe is *before* anyone rates it?
-
-**Why This Matters**  
-Cooking websites host tens of thousands of recipes. Many are unrated or under-reviewed, leaving users guessing. A reliable prediction model could:
-
-- Suggest high-quality new recipes faster
-- Surface hidden gems with low visibility
-- Help app developers recommend more relevant content to users
-
-This question also offers a real-world application of data science principles — from data cleaning to prediction and fairness — in a way that’s tangible (and tasty!).
-
-**Dataset Summary**
-- `RAW_recipes.csv`: 231,637 rows × 17 columns  
-- `interactions.csv`: 731,927 rows × 5 columns
-
-**Relevant Columns Explained**
-
-**RAW_recipes.csv**
-- `name`: The title of the recipe  
-- `ingredients`: A list of ingredients used  
-- `minutes`: Time (in minutes) to prepare  
-- `n_steps`: Number of steps in the instructions  
-- `submitted`: Date the recipe was submitted  
-- `nutrition`: List of nutritional values (calories, fat, sugar, etc.)
-
-**interactions.csv**
-- `recipe_id`: Links to a recipe in `RAW_recipes.csv`  
-- `rating`: User’s rating (1–5)  
-- `review`: Optional written review  
-- `date`: Date of the interaction
+**Dataset Overview**  
+- `RAW_recipes.csv`: 231,637 rows, 17 columns  
+  - Relevant columns:
+    - `name`: The name of the recipe  
+    - `ingredients`: A list of ingredients used  
+    - `minutes`: Total time to prepare  
+    - `n_steps`: Number of cooking steps  
+    - `submitted`: Date the recipe was added  
+    - `nutrition`: A list with nutritional values (e.g., calories, fat, sugar, etc.)  
+- `interactions.csv`: 731,927 rows, 5 columns  
+  - Relevant columns:
+    - `recipe_id`: Foreign key matching the recipe  
+    - `rating`: The rating a user gave (1 to 5)  
+    - `review`: Optional text review  
+    - `date`: Date of interaction
