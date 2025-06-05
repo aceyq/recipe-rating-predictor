@@ -2,8 +2,7 @@
 layout: page
 title: Predicting Recipe Ratings
 ---
-
-## Introduction and Question Identification
+# Introduction and Question Identification
 
 **Introduction**  
 Food is deeply personal — and yet, when we search for recipes online, we often rely on star ratings and vague comments to decide what to cook. This project explores how **recipe metadata** — like ingredients, cook time, and number of steps — can help us **predict recipe ratings**, potentially improving search results and recommendations on cooking platforms.
@@ -39,4 +38,21 @@ Cooking websites host tens of thousands of recipes. Many are unrated or under-re
 This question also offers a real-world application of data science principles — from data cleaning to prediction and fairness — in a way that’s tangible (and tasty!).
 
 **Dataset Summary**
-- 📦 `RAW_recipes.csv`_
+- `RAW_recipes.csv`: 231,637 rows × 17 columns  
+- `interactions.csv`: 731,927 rows × 5 columns
+
+**Relevant Columns Explained**
+
+**RAW_recipes.csv**
+- `name`: The title of the recipe  
+- `ingredients`: A list of ingredients used  
+- `minutes`: Time (in minutes) to prepare  
+- `n_steps`: Number of steps in the instructions  
+- `submitted`: Date the recipe was submitted  
+- `nutrition`: List of nutritional values (calories, fat, sugar, etc.)
+
+**interactions.csv**
+- `recipe_id`: Links to a recipe in `RAW_recipes.csv`  
+- `rating`: User’s rating (1–5)  
+- `review`: Optional written review  
+- `date`: Date of the interaction
