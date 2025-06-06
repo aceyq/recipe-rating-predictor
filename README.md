@@ -1,4 +1,4 @@
-## Introduction and Question Identification
+## Introduction
 
 **Introduction**  
 Online recipe platforms like AllRecipes and Food.com host hundreds of thousands of user-submitted recipes. However, many recipes receive few or no ratings, leaving users unsure which ones to trust. This project investigates whether we can predict a recipe's average user rating based solely on its metadata — such as ingredients, cook time, and nutritional values — before any user interaction has occurred.
@@ -15,7 +15,7 @@ A reliable prediction model could:
 
 ---
 
-## Dataset Overview
+### Dataset Overview
 
 This project uses two large datasets:
 
@@ -28,7 +28,7 @@ This project uses two large datasets:
 
 ---
 
-## Relevant Columns and Their Roles
+### Relevant Columns and Their Roles
 
 ### From `RAW_recipes.csv`:
 - **`name`**: Title of the recipe (used for context, not modeling)
@@ -46,7 +46,7 @@ This project uses two large datasets:
 
 ---
 
-## Summary
+### Summary
 
 This project will explore how a combination of structured recipe metadata and historical interaction data can be used to predict user ratings. We will begin by cleaning and exploring the datasets, then assess missingness, perform hypothesis testing, and ultimately develop a supervised learning model.
 
@@ -80,7 +80,7 @@ The result is a clean, feature-rich dataset containing both recipe metadata and 
 👉 **Below is the head of the cleaned `recipes_df` dataframe:**  
 ![Head of Cleaned DataFrame](images/head_df.jpg)
 
-## Univariate Analysis
+### Univariate Analysis
 
 We began our exploratory analysis by examining the distribution of calories per recipe. Many recipes had extreme outliers, so we filtered out entries with more than 3000 calories to better capture the core distribution.
 
@@ -93,7 +93,7 @@ This skew suggests that user-submitted recipes tend to favor lighter or more eve
   frameborder="0"
 ></iframe>
 
-## Bivariate Analysis
+### Bivariate Analysis
 
 To explore how recipe calorie content relates to user preferences, we plotted a scatterplot of `calories` versus `avg_rating`, filtering out recipes above 3000 calories to reduce distortion from extreme outliers.
 
@@ -106,7 +106,7 @@ The scatterplot reveals that **most ratings are clustered at the upper end (4.0 
   frameborder="0"
 ></iframe>
 
-## Interesting Aggregates
+### Interesting Aggregates
 
 To explore whether recipe complexity affects user satisfaction, we grouped recipes by the number of preparation steps (`n_steps`) into four bins:  
 **<5**, **5–10**, **10–20**, and **20+**.
@@ -189,9 +189,9 @@ This supports our broader claim that `avg_rating` is **Not Missing at Random (NM
 
 ---
 
-### Hypotheses Testing
+## Hypotheses Testing
 
-## Hypothesis Testing: Do Recipes with More Ingredients Receive Higher Ratings?
+### Hypothesis Testing: Do Recipes with More Ingredients Receive Higher Ratings?
 
 To investigate whether recipe complexity (measured by ingredient count) affects user satisfaction, we tested whether recipes with **more ingredients** tend to receive **higher average ratings**.
 
