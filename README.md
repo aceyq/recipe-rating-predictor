@@ -84,14 +84,47 @@ These numeric columns are now ready for exploratory data analysis and modeling.
 The result is a clean, feature-rich dataset containing both recipe metadata and user behavior metrics.
 
 👉 **Below is the head of the cleaned `recipes_df` dataframe:**  
+
+![Head of Cleaned DataFrame](images/head_df.jpg)
+
+## Univariate Analysis
+
+We began our exploratory analysis by examining the distribution of calories per recipe. Many recipes had extreme outliers, so we filtered out entries with more than 3000 calories to better capture the core distribution.
+
+This skew suggests that user-submitted recipes tend to favor lighter or more everyday meals, while extremely high-calorie recipes are relatively rare. Understanding the distribution of calories helps inform feature scaling choices later and provides context for how nutrition varies across the dataset.
+
 <iframe
   src="plots/calorie_dist.html"
   width="800"
-  height="600"
+  height="500"
   frameborder="0"
 ></iframe>
 
-<!-- REPLACE THIS LINE with either a screenshot or a code snippet:
-```python
-recipes_df[['name', 'ingredients', 'minutes', 'n_steps', 'avg_rating', 'calories', 'fat_PDV', 'sugar_PDV']].head()
+## Bivariate Analysis
 
+To explore how recipe calorie content relates to user preferences, we plotted a scatterplot of `calories` versus `avg_rating`, filtering out recipes above 3000 calories to reduce distortion from extreme outliers.
+
+The scatterplot reveals that **most ratings are clustered at the upper end (4.0 to 5.0)** regardless of calorie count, suggesting that calorie content may not be a strong driver of user satisfaction. However, we also see a small concentration of **lower ratings (1.0–3.0)** for recipes in the higher-calorie range (1500–3000), which could suggest either lower-quality indulgent recipes or less user engagement with such items. The lack of a clear downward or upward trend implies that **calories alone do not predict average rating well**, at least in a linear sense.
+
+<iframe
+  src="plots/calories_vs_avg_rating.html"
+  width="800"
+  height="500"
+  frameborder="0"
+></iframe>
+
+## Interesting Aggregates
+
+To explore whether recipe complexity affects user satisfaction, we grouped recipes by the number of preparation steps (`n_steps`) into four bins:  
+**<5**, **5–10**, **10–20**, and **20+**.
+
+For each bin, we calculated the **average user rating**. The bar chart below reveals that **the average ratings are nearly identical across all step groups**, ranging from 4.62 to 4.65. This suggests that the number of steps — a proxy for complexity — does **not have a strong influence** on how recipes are rated.
+
+This result is itself significant: it implies that users may rate recipes based more on factors like taste, familiarity, or ingredient quality rather than how long or complicated the recipe is to make.
+
+<iframe
+  src="plots/avg_rating_by_steps.html"
+  width="800"
+  height="500"
+  frameborder="0"
+></iframe>
