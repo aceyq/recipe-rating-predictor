@@ -121,21 +121,45 @@ The scatterplot reveals that **most ratings are clustered at the upper end (4.0 
   frameborder="0"
 ></iframe>
 
-### Interesting Aggregates
+## Interesting Aggregates
 
-To explore whether recipe complexity affects user satisfaction, we grouped recipes by the number of preparation steps (`n_steps`) into four bins:  
-**<5**, **5–10**, **10–20**, and **20+**.
+### Average Rating by Number of Steps
+To explore whether recipe complexity affects user satisfaction, we grouped recipes by the number of preparation steps.
 
-For each bin, we calculated the **average user rating**. The bar chart below reveals that **the average ratings are nearly identical across all step groups**, ranging from 4.62 to 4.65. This suggests that the number of steps — a proxy for complexity — does **not have a strong influence** on how recipes are rated.
+| Step Group   |   Average Rating |
+|:-------------|-----------------:|
+| <5           |             4.64 |
+| 5–10         |             4.62 |
+| 10–20        |             4.62 |
+| 20+          |             4.65 |
 
-This result is itself significant: it implies that users may rate recipes based more on factors like taste, familiarity, or ingredient quality rather than how long or complicated the recipe is to make.
+The average ratings are nearly identical across all groups, ranging from 4.62 to 4.65. This suggests that users don’t penalize recipes for being more complex — they may be more focused on flavor, familiarity, or other qualities.
 
-<iframe
-  src="plots/avg_rating_by_steps.html"
-  width="800"
-  height="500"
-  frameborder="0"
-></iframe>
+### Average Rating by Cooking Duration Group
+We then explored whether users prefer quick or slow recipes by grouping based on cooking time.
+
+| Duration Group   |   Average Rating |
+|:-----------------|-----------------:|
+| <15 min          |             4.67 |
+| 15–30 min        |             4.62 |
+| 30–60 min        |             4.61 |
+| 1–2 hr           |             4.63 |
+| 2+ hr            |             4.59 |
+
+Average ratings are very consistent across all cooking times. This implies that longer prep time doesn’t discourage users from giving high ratings, possibly because complex recipes can be more satisfying or reserved for special occasions.
+
+### Average Number of Steps by Ingredient Count Group
+To test the relationship between ingredient count and recipe complexity, we calculated the average number of steps per ingredient group.
+
+| Ingredient Count Group |   Average Steps |
+|:------------------------|----------------:|
+| 0–5                     |            5.01 |
+| 6–10                    |            6.68 |
+| 11–15                   |            8.04 |
+| 16–20                   |            9.07 |
+| 20+                     |            9.97 |
+
+As expected, recipes with more ingredients also tend to have more steps. This confirms that ingredient count is a good proxy for recipe complexity, which helps justify its use as a feature in our predictive model.
 
 ## Assessment of Missingness
 
