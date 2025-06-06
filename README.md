@@ -235,4 +235,44 @@ Below is a histogram showing the distribution of the test statistic under 1,000 
   frameborder="0"
 ></iframe>
 
+## Framing a Prediction Problem
+
+We define the following **prediction problem**:
+
+**Can we predict a recipe's average user rating (on a 0–5 scale) based solely on information available before any reviews are submitted?**
+
+This is a **regression problem**, as the target variable (`average_rating`) is continuous.
+
+---
+
+### Response Variable
+
+- **Response variable**: `average_rating`
+- **Why this target?**  
+  Many online recipes never receive user feedback, leaving potential cooks unsure of which ones to trust. By predicting a recipe’s likely rating using metadata alone, we can:
+  - Help users discover high-quality but unrated recipes
+  - Support recipe platforms in showcasing more trustworthy content
+
+---
+
+### Model Evaluation Metric
+
+- **Primary metric**: **Root Mean Squared Error (RMSE)**
+- **Why RMSE?**  
+  RMSE penalizes large errors more than small ones, which is important in this context. It’s worse to predict a 4.5 rating for a poorly received 2.0 recipe than to be slightly off for many well-rated ones.  
+  We chose RMSE over metrics like MAE because it more strongly emphasizes prediction accuracy for outliers. Since this is a regression problem, classification metrics like accuracy or F1-score do not apply.
+
+---
+
+### Time of Prediction Justification
+
+To ensure our model reflects what would realistically be known at the time of prediction, we include only metadata available when the recipe is first posted. These features include:
+
+- `num_ingredients`
+- `total_time_minutes`
+- Nutritional information (`calories`, `fat`, `protein`, `carbs`, `sugar`)
+- Any additional features that can be computed from recipe metadata
+
+We **exclude** any features that result from user behavior (e.g. number of ratings, user comments) to avoid data leakage.
+
 
