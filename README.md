@@ -1,3 +1,7 @@
+# Recipe Rater: Predicting Taste from Metadata
+**By Acelynn Qiao**  
+**DSC 80 – UC San Diego**
+
 ## Introduction
 
 **Introduction**  
