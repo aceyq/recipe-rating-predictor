@@ -86,13 +86,15 @@ Below is a preview of our cleaned dataset, showing selected columns related to r
 
 Below is a preview of our cleaned dataset, showing selected columns related to recipe content and user feedback.
 
-|| name                                 | ingredients                       |   minutes |   n_steps |   avg_rating |   calories |   fat_PDV |
-|:-------------------------------------|:----------------------------------|----------:|----------:|-------------:|-----------:|----------:|
-| 1 brownies in the world    best ever | ['bittersweet chocolate', 'uns... |        40 |        10 |            4 |      138.4 |        10 |
-| 1 in canada chocolate chip cookies   | ['white sugar', 'brown sugar',... |        45 |        12 |            5 |      595.1 |        46 |
-| 412 broccoli casserole               | ['frozen broccoli cuts', 'crea... |        40 |         6 |            5 |      194.8 |        20 |
-| millionaire pound cake               | ['butter', 'sugar', 'eggs', 'a... |       120 |         7 |            5 |      878.3 |        63 |
-| 2000 meatloaf                        | ['meatloaf mixture', 'unsmoked... |        90 |        17 |            5 |      267   |        30 |
+| Name                                | Ingredients (truncated)                     | Minutes | Steps | Avg Rating | Calories | Fat %DV |
+|-------------------------------------|---------------------------------------------|---------|-------|------------|----------|----------|
+| brownies in the world best ever     | ['bittersweet chocolate', 'uns...           | 40      | 10    | 4.0        | 138.4    | 10       |
+| 1 in canada chocolate chip cookies  | ['white sugar', 'brown sugar', 'sho...      | 45      | 12    | 5.0        | 595.1    | 46       |
+| 412 broccoli casserole              | ['frozen broccoli cuts', 'cream of ...      | 40      | 6     | 5.0        | 194.8    | 20       |
+| millionaire pound cake              | ['butter', 'sugar', 'eggs', 'all-pu...      | 120     | 7     | 5.0        | 878.3    | 63       |
+| 2000 meatloaf                       | ['meatloaf mixture', 'unsmoked baco...      | 90      | 17    | 5.0        | 267.0    | 30       |
+
+
 ### Univariate Analysis
 
 We began our exploratory analysis by examining the distribution of calories per recipe. Many recipes had extreme outliers, so we filtered out entries with more than 3000 calories to better capture the core distribution.
