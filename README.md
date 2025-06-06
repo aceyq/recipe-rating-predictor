@@ -135,7 +135,7 @@ We examined the dataset for missing values using `.isna().sum()`, and found that
 
 We believe that the `avg_rating` column is **Not Missing at Random (NMAR)**. Its missingness is not due to chance or unrelated variables — rather, it's directly tied to a **lack of user engagement**. Recipes with no views, no ratings, or no popularity **will not have any average rating**, so the missingness is inherently linked to how visible or appealing a recipe is to users.
 
-> This means the absence of data itself is informative — recipes with no ratings are likely unpopular or untested. This violates the assumptions of MAR or MCAR.
+This means the absence of data itself is informative — recipes with no ratings are likely unpopular or untested. This violates the assumptions of MAR or MCAR.
 
 To possibly reclassify this as **MAR**, we would need **additional data** — for example:
 - Impressions/clicks per recipe
