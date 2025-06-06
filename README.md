@@ -1,9 +1,3 @@
-# Recipe Rating Predictor
-
-A data science project for DSC 80 at UC San Diego exploring recipe quality and user ratings!
-
----
-
 # Introduction and Question Identification
 
 **Introduction**  
@@ -85,7 +79,7 @@ The result is a clean, feature-rich dataset containing both recipe metadata and 
 
 👉 **Below is the head of the cleaned `recipes_df` dataframe:**  
 
-![Head of Cleaned DataFrame](images/head_df.jpg)
+<img src="images/head_df.jpg" width="700"/>
 
 ## Univariate Analysis
 
