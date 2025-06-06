@@ -78,8 +78,21 @@ These numeric columns are now ready for exploratory data analysis and modeling.
 The result is a clean, feature-rich dataset containing both recipe metadata and user behavior metrics.
 
 👉 **Below is the head of the cleaned `recipes_df` dataframe:**  
-![Head of Cleaned DataFrame](images/head_df.jpg)
+## Head of Cleaned DataFrame
 
+Below is a preview of our cleaned dataset, showing selected columns related to recipe content and user feedback.
+
+## Head of Cleaned DataFrame
+
+Below is a preview of our cleaned dataset, showing selected columns related to recipe content and user feedback.
+
+|| name                                 | ingredients                       |   minutes |   n_steps |   avg_rating |   calories |   fat_PDV |
+|:-------------------------------------|:----------------------------------|----------:|----------:|-------------:|-----------:|----------:|
+| 1 brownies in the world    best ever | ['bittersweet chocolate', 'uns... |        40 |        10 |            4 |      138.4 |        10 |
+| 1 in canada chocolate chip cookies   | ['white sugar', 'brown sugar',... |        45 |        12 |            5 |      595.1 |        46 |
+| 412 broccoli casserole               | ['frozen broccoli cuts', 'crea... |        40 |         6 |            5 |      194.8 |        20 |
+| millionaire pound cake               | ['butter', 'sugar', 'eggs', 'a... |       120 |         7 |            5 |      878.3 |        63 |
+| 2000 meatloaf                        | ['meatloaf mixture', 'unsmoked... |        90 |        17 |            5 |      267   |        30 |
 ### Univariate Analysis
 
 We began our exploratory analysis by examining the distribution of calories per recipe. Many recipes had extreme outliers, so we filtered out entries with more than 3000 calories to better capture the core distribution.
@@ -275,4 +288,120 @@ To ensure our model reflects what would realistically be known at the time of pr
 
 We **exclude** any features that result from user behavior (e.g. number of ratings, user comments) to avoid data leakage.
 
+## Baseline Model
 
+Our baseline model aims to predict a recipe’s average rating using two features derived from the original dataset:
+
+- `minutes` – the total preparation time of the recipe  
+- `submitted_year` – the year in which the recipe was submitted
+
+These features were selected to capture basic temporal and effort-related patterns that might influence user ratings.
+
+### Feature Types and Encodings
+
+- **Quantitative features**: 1  
+  - `minutes` – left untransformed
+- **Ordinal features**: 0  
+- **Nominal features**: 1  
+  - `submitted_year` – encoded using one-hot encoding to convert the categorical values into binary indicators
+
+All feature transformations and model fitting were implemented using a scikit-learn `Pipeline`. This ensured that the preprocessing steps were cleanly applied both during training and inference, and made the pipeline easily extensible for future model iterations.
+
+### Model Description
+
+We used a **Linear Regression** model, chosen for its simplicity and interpretability as a baseline. Linear models make strong assumptions, which are unlikely to fully capture the complexity of recipe rating behavior, but they provide a useful starting point for comparison with more advanced models.
+
+### Model Performance
+
+The model was trained on 80% of the dataset and evaluated on the remaining 20% using **Root Mean Squared Error (RMSE)** as the metric.
+
+**Test RMSE: _0.6356_**
+
+### Interpretation
+
+While the model does provide a baseline prediction, we do **not consider it a “good” model**. The RMSE of 0.6356 indicates a substantial average prediction error given that ratings range from 0 to 5. This level of error suggests that key factors — such as ingredients, nutrition, and instructions — are missing from the current feature set. Additionally, linear regression assumes linear relationships, which may not align well with the underlying data patterns.
+
+That said, this baseline is valuable because it establishes a **performance floor**. Future models can build upon it using more sophisticated features and algorithms to improve prediction accuracy.
+
+## Final Model
+
+To improve on our baseline model, we engineered two new features and used a more powerful predictive algorithm with hyperparameter tuning.
+
+### Added Features and Motivation
+
+We added the following features to better represent user behavior and recipe complexity:
+
+- **`log_total_time`** (quantitative): Log-transformed total prep time helps reduce skewness in cooking times. Most recipes take under an hour, but a few take several hours — applying a logarithmic transformation smooths out this imbalance and gives more weight to common cases.
+- **`n_ingredients`** (quantitative): The number of ingredients is a good proxy for recipe complexity. More ingredients may indicate a more elaborate or flavorful recipe, which could influence user satisfaction and ratings, as users may favor simpler or more impressive dishes depending on context.
+
+We retained **`submitted_month`** (nominal) from the baseline model, which captures potential seasonal patterns in user engagement or recipe popularity.
+
+These features are rooted in the **data generating process**: how users choose recipes (based on time and ingredient list) and when they engage with them (seasonality) are all factors likely to influence a recipe’s average rating.
+
+### Feature Types Summary
+
+- **Quantitative features**: 2 (`log_total_time`, `n_ingredients`)
+- **Ordinal features**: 0
+- **Nominal features**: 1 (`submitted_month`, one-hot encoded)
+
+### Model and Hyperparameters
+
+We used a **Random Forest Regressor**, a non-linear ensemble model that handles both numeric and categorical features well and captures complex interactions without requiring explicit feature engineering.
+
+We used `GridSearchCV` to perform a cross-validated hyperparameter search, tuning:
+
+- `max_depth`: Maximum depth of each decision tree
+- `n_estimators`: Number of trees in the forest
+
+The best parameters found were:
+
+- `max_depth = 10`
+- `n_estimators = 100`
+
+This approach balances model flexibility and overfitting by limiting depth while using enough trees for stable predictions.
+
+### Model Performance
+
+We trained the final model on the same train-test split used in the baseline model to allow a fair comparison.
+
+- **Final Model RMSE**: **0.6360**
+- **Baseline Model RMSE**: **0.6356**
+
+### Conclusion
+
+Although the RMSE only slightly improved (and is numerically close), the **final model incorporates richer features** and a more expressive model architecture. From a conceptual standpoint, it better reflects how users may interact with recipes (e.g., complexity, seasonality, effort), even if performance improvements are modest on this dataset.
+
+This final model establishes a more thoughtful and interpretable foundation for further improvement, rather than relying solely on default numeric inputs.
+
+## Fairness Analysis
+
+To assess fairness in our final model’s performance, we compared its predictive accuracy across **two seasonal groups**:
+
+- **Group X**: Recipes submitted during **summer months** (June, July, August)  
+- **Group Y**: Recipes submitted during **winter months** (December, January, February)
+
+### Evaluation Metric
+
+We used **Root Mean Squared Error (RMSE)** as our evaluation metric, since our prediction task is regression-based.
+
+### Hypotheses
+
+- **Null Hypothesis (H₀)**: The model is fair. Its RMSE for summer and winter recipes is roughly equal, and any differences are due to random variation.
+- **Alternative Hypothesis (H₁)**: The model is unfair. It performs worse (i.e., higher RMSE) on summer recipes than on winter recipes.
+
+### Test Statistic and Significance Level
+
+Our test statistic was the **difference in RMSE** between the two groups:  
+**RMSEₛᵤₘₘₑᵣ − RMSE𝓌ᵢₙₜₑᵣ**
+
+We used a **significance level (α)** of **0.05**, and ran a **permutation test with 1,000 iterations**.
+
+### Results
+
+- **Observed RMSE difference**: **-0.0405**  
+- **p-value**: **0.9710**
+
+### Conclusion
+
+Since our p-value is **much greater than 0.05**, we **fail to reject the null hypothesis**. There is no evidence that our model performs worse for summer recipes than winter recipes. In fact, the negative RMSE difference suggests that the model performed slightly *better* for summer recipes, but this difference is not statistically significant.  
+This analysis supports the conclusion that our model performs **fairly across seasonal groups**.
