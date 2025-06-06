@@ -1,4 +1,4 @@
-# Introduction and Question Identification
+## Introduction and Question Identification
 
 **Introduction**  
 Online recipe platforms like AllRecipes and Food.com host hundreds of thousands of user-submitted recipes. However, many recipes receive few or no ratings, leaving users unsure which ones to trust. This project investigates whether we can predict a recipe's average user rating based solely on its metadata — such as ingredients, cook time, and nutritional values — before any user interaction has occurred.
@@ -221,6 +221,7 @@ We computed the observed correlation and then permuted the avg_rating column 1,0
 The observed correlation of **0.0030** is extremely small, and the p-value of **0.3880** is **much larger** than our significance threshold of 0.05. Therefore, we fail to reject the null hypothesis.
 
 This result suggests that, in this dataset, there is no meaningful relationship between the number of ingredients a recipe has and how highly it is rated. In other words, complexity does not guarantee better ratings, and simpler recipes may be just as satisfying to users.
+
 ---
 
 ### Permutation Test Plot
